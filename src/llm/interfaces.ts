@@ -1,0 +1,1 @@
+export type LLMProviders = 'openai' | 'gemini'
