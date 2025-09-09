@@ -1,11 +1,21 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
-import { PORT } from './config';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { getLogLevels } from './config';
+import * as fs from 'fs'
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logLevels = getLogLevels()
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: logLevels,
+  })
+
+  const configService = app.get(ConfigService)
+  const logger = new Logger(bootstrap.name)
 
   // Versioning
   app.enableVersioning({
@@ -25,9 +35,14 @@ async function bootstrap() {
   // Pipes
   app.useGlobalPipes(new ValidationPipe());
 
-  await app.listen(PORT);
+  const port = configService.get<string>('appConfig.appPort')
+  await app.listen(port);
 
-  console.log(`Server running on http://localhost:${PORT}`);
+  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8')) as { name: string; version: string }
+  const appName = packageJson.name
+  const appVersion = packageJson.version
+
+  logger.log(`Application (${appName} v${appVersion}) running on: ${await app.getUrl()} `)
 
 }
 bootstrap();
