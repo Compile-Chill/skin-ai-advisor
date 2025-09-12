@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.build.json",
+
+  "compilerOptions": {
+    "skipLibCheck": true,    
+    "baseUrl": "."
+  },
+  "include": [
+    "src",
+    "./.eslintrc.js",
+    "./jest.config.ts",
+    "./jest.config.base.ts",
+    "types",
+    "tests",
+  ],
+  "exclude": ["node_modules", "build"]
+}

@@ -2,7 +2,9 @@ import { LogLevel, Logger } from '@nestjs/common'
 
 export function getLogLevels(): LogLevel[] {
   const logger = new Logger('getLogLevels')
-  const logLevelConfig = Number.isNaN(Number(process.env.LOG_LEVEL)) ? 1 : parseInt(process.env.LOG_LEVEL as string, 10)
+  const logLevelConfig = Number.isNaN(Number(process.env.LOG_LEVEL))
+    ? 1
+    : parseInt(process.env.LOG_LEVEL as string, 10)
 
   const logLevels: LogLevel[] = ['log']
 

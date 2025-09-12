@@ -1,7 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { BasicAdviceService } from './basic-advice.service';
-import { BasicAdviceDto } from './basic-advice.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { Body, Controller, Post } from '@nestjs/common'
+import { ApiTags, ApiBody } from '@nestjs/swagger'
+
+import { BasicAdviceDto } from './basic-advice.dto'
+import { BasicAdviceService } from './basic-advice.service'
 
 @Controller({
   path: 'basic-advice',
@@ -28,6 +29,6 @@ export class BasicAdviceController {
     },
   })
   async recommend(@Body() dto: BasicAdviceDto) {
-    return this.basicAdviceService.generateAdvice(dto);
+    return this.basicAdviceService.generateAdvice(dto)
   }
 }

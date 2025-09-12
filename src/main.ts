@@ -1,11 +1,12 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { getLogLevels } from './config';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { NestFactory } from '@nestjs/core'
+import { NestExpressApplication } from '@nestjs/platform-express'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as fs from 'fs'
-import { NestExpressApplication } from '@nestjs/platform-express';
+
+import { AppModule } from './app.module'
+import { getLogLevels } from './config'
 
 async function bootstrap() {
   const logLevels = getLogLevels()
@@ -27,22 +28,24 @@ async function bootstrap() {
     .setTitle('Skin AI Advisor API')
     .setDescription('API for generating skincare recommendations using AI')
     .setVersion('1.0')
-    .build();
+    .build()
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  const document = SwaggerModule.createDocument(app, config)
+  SwaggerModule.setup('api', app, document)
 
   // Pipes
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe())
 
   const port = configService.get<string>('appConfig.appPort')
-  await app.listen(port);
+  await app.listen(port)
 
-  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8')) as { name: string; version: string }
+  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8')) as {
+    name: string
+    version: string
+  }
   const appName = packageJson.name
   const appVersion = packageJson.version
 
   logger.log(`Application (${appName} v${appVersion}) running on: ${await app.getUrl()} `)
-
 }
-bootstrap();
+bootstrap()

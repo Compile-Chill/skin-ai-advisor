@@ -1,6 +1,7 @@
-import { IsString, IsOptional, IsNumber, Min, Max, IsEnum } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { SkinType } from '../../commons';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import { IsString, IsOptional, IsNumber, Min, Max, IsEnum } from 'class-validator'
+
+import { SkinType } from '../../commons'
 
 export class BasicAdviceDto {
   @ApiProperty({
@@ -9,7 +10,7 @@ export class BasicAdviceDto {
     example: SkinType.DRY,
   })
   @IsEnum(SkinType, { message: 'skinType must be one of: dry, oily, combination, normal, sensitive' })
-  skinType: SkinType;
+  skinType: SkinType
 
   @ApiPropertyOptional({
     description: 'User age (between 10 and 100)',
@@ -21,7 +22,7 @@ export class BasicAdviceDto {
   @IsNumber()
   @Min(10)
   @Max(100)
-  age?: number;
+  age?: number
 
   @ApiPropertyOptional({
     description: 'Main skin concerns or goals',
@@ -29,5 +30,5 @@ export class BasicAdviceDto {
   })
   @IsOptional()
   @IsString()
-  concerns?: string;
+  concerns?: string
 }

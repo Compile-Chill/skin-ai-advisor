@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
-import { BasicAdviceModule } from './controllers';
-import { LlmModule } from './llm';
-import { ConfigModule } from '@nestjs/config';
-import appConfig from './config/app.config';
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+
+import appConfig from './config/app.config'
+import { BasicAdviceModule } from './controllers'
+import { LlmModule } from './llm'
 
 @Module({
   imports: [
@@ -11,8 +12,8 @@ import appConfig from './config/app.config';
       load: [appConfig],
       isGlobal: true,
     }),
-    BasicAdviceModule, 
-    LlmModule
+    BasicAdviceModule,
+    LlmModule,
   ],
   controllers: [],
   providers: [],

@@ -1,6 +1,9 @@
-import { Module } from '@nestjs/common';
-import { BasicAdviceController, BasicAdviceService } from '.';
-import { LlmModule } from 'src/llm';
+import { Module } from '@nestjs/common'
+
+import { LlmModule } from '../../llm'
+
+import { BasicAdviceController } from './basic-advice.controller'
+import { BasicAdviceService } from './basic-advice.service'
 
 @Module({
   imports: [LlmModule],
